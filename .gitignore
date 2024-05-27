@@ -51,4 +51,8 @@ dist-ssr
 *.sw?
 
 #Custom
+#Java
 application.properties
+#Python
+venv/
+__pycache__
