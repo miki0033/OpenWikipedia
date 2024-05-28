@@ -9,6 +9,7 @@ import Home from "./components/pages/HomePage";
 //import PrivateRoute from "./hooks/PrivateRoute";
 //import { useAuthContext } from "./hooks/useAuthContext";
 import ArticlePage from "./components/pages/ArticlePage";
+import ProfilePage from "./components/pages/ProfilePage";
 
 const App: React.FC = () => {
   //const { isLoggedIn } = useAuthContext();
@@ -31,6 +32,17 @@ const App: React.FC = () => {
         <Route path="/register" element={<Register />} />
 
         <Route path="/article/:id" element={<ArticlePage />} />
+        <Route
+          path="/profile"
+          element={
+            //<PrivateRoute isAuthenticated={isLoggedIn}>
+
+            //TODO
+            <ProfilePage />
+
+            //</PrivateRoute>
+          }
+        />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

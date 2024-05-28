@@ -59,13 +59,16 @@ public class UserService {
         }
 
         // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
+        User user = new User(
+                signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+                encoder.encode(signUpRequest.getPassword()),
+                signUpRequest.getFirstName(),
+                signUpRequest.getLastName());
 
-        userRepository.save(user);
+        User newUser = userRepository.save(user);
 
-        return ResponseEntity.status(202).body(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.status(202).body(newUser.toJSON());
     }
 
     // R

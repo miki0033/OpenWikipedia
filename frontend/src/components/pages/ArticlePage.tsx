@@ -36,15 +36,15 @@ const ArticlePage = () => {
 
   const wikitextToHtml = (wikitext: string) => {
     // Definisci l'URL della rotta
-    const url = "http://127.0.0.1:5000/convert";
+    const url = "http://127.0.0.1:8080/auth/convert";
 
     axios
       .post(url, { wikitext })
       .then((response) => {
         // Ottieni l'HTML dalla risposta
-        setHtml(response.data.wikitext);
+        setHtml(response.data);
         console.log("HTML ricevuto:");
-        console.log({ html });
+        console.log({ response });
       })
       .catch((error) => {
         // Gestisci gli errori

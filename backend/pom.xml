@@ -16,7 +16,10 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
+		<dkpro.jwpl.version>2.0.0</dkpro.jwpl.version>
 	</properties>
+	  
+	  
 	<dependencies>
 		<!-- Springboot Starter Data -->
 		<dependency>
@@ -106,6 +109,49 @@
 			<artifactId>jackson-datatype-jsr310</artifactId>
 			<version>2.16.2</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.dkpro.jwpl/dkpro-jwpl-parser -->
+		<dependency>
+			<groupId>com.github.rjeschke</groupId>
+			<artifactId>txtmark</artifactId>
+			<version>0.13</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.vladsch.flexmark</groupId>
+			<artifactId>flexmark-all</artifactId>
+			<version>0.62.2</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.sweble.wom3/sweble-wom3-core -->
+		<dependency>
+			<groupId>org.sweble.wom3</groupId>
+			<artifactId>sweble-wom3-core</artifactId>
+			<version>3.1.9</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.sweble.wom3/sweble-wom3-swc-adapter -->
+		<dependency>
+			<groupId>org.sweble.wom3</groupId>
+			<artifactId>sweble-wom3-swc-adapter</artifactId>
+			<version>3.1.9</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.sweble.wikitext/swc-parser-lazy -->
+		<dependency>
+			<groupId>org.sweble.wikitext</groupId>
+			<artifactId>swc-parser-lazy</artifactId>
+			<version>3.1.9</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.sweble.wikitext/swc-engine -->
+		<dependency>
+			<groupId>org.sweble.wikitext</groupId>
+			<artifactId>swc-engine</artifactId>
+			<version>3.1.9</version>
+		</dependency>
+
+
+
+
 	</dependencies>
 
 	<build>

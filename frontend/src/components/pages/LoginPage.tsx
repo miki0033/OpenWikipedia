@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Button, Input, Image } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import Logo from "../atoms/Logo";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ const LoginPage = () => {
     <div>
       <div className="flex flex-col justify-center items-center">
         <div>
-          <Image width={150} src="./Logo.png" alt="logo" className="m-5" />
+          <Logo></Logo>
         </div>
         <div>
           <h1>Login</h1>
@@ -37,15 +38,15 @@ const LoginPage = () => {
             type="password"
             label="Password"
             variant="bordered"
-            defaultValue="junior@nextui.org"
+            defaultValue=""
             className="max-w-xs m-2"
             value={password}
             onValueChange={setPassword}
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button
-            radius="full"
-            className="bg-gradient-to-tr from-blue-500 to-yellow-500 text-white shadow-lg"
+            radius="lg"
+            className="bg-gradient-to-tr bg-primary-500 text-white shadow-lg"
             onPress={handleLogin}
           >
             Sign In

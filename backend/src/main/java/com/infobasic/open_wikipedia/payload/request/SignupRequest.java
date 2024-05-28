@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Email;
 @AllArgsConstructor
 public class SignupRequest {
   @NotBlank
-  @Size(min = 3, max = 20)
+  @Size(max = 20)
   private String username;
 
   @NotBlank
@@ -20,7 +20,7 @@ public class SignupRequest {
   private String email;
 
   @NotBlank
-  @Size(min = 6, max = 40)
+  @Size(max = 40)
   private String password;
 
   @NotBlank

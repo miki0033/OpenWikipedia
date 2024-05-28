@@ -66,12 +66,14 @@ const Header = () => {
   }, [visible]);
 
   return (
-    <div id="header" className="w-full grid grid-cols-3 space-around px-8 py-4">
-      {
-        //TODO
-      }
+    <div
+      id="header"
+      className="w-full grid grid-cols-3 gap-4 space-around px-8 py-4"
+    >
       <div id="logo" className="flex justify-center">
-        <Logo></Logo>
+        <Link to={`/`} onClick={handleLinkClick}>
+          <Logo></Logo>
+        </Link>
       </div>
       <div id="search" className="flex flex-col justify-center relative">
         <Input
@@ -138,7 +140,10 @@ const Header = () => {
           </div>
         )}
       </div>
-      <div id="sign" className="flex flex-row gap-4 justify-center">
+      <div
+        id="sign"
+        className="flex flex-row gap-4 justify-center items-center m-2"
+      >
         <Link to="/login">
           <Button color="primary">Login</Button>
         </Link>

@@ -6,11 +6,11 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <div className="glex flex-col h-full text-center text-default-600 ">
+    <div className="flex  flex-col h-screen text-center text-default-600 ">
       <Header />
-
-      <Main children={<Outlet />} />
-
+      <div className="flex-grow">
+        <Main children={<Outlet />} />
+      </div>
       <Footer></Footer>
     </div>
   );
