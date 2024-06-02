@@ -53,6 +53,8 @@ dist-ssr
 #Custom
 #Java
 application.properties
+*.log
+*.log.*
 #Python
 venv/
 __pycache__

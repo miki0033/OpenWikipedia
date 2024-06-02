@@ -31,7 +31,9 @@ public class JwtUtils {
     UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
     // userPrincipal.setUsername(userService.getDefaultUser(userPrincipal.getId()).getUsername());
     String Username = userPrincipal.getUsername();
+    String userId = userPrincipal.getId();
     return Jwts.builder()
+        .setSubject((userPrincipal.getId())).claim("id", userId)
         .setSubject((userPrincipal.getUsername())).claim("Username", Username)
         .setIssuedAt(new Date())
         .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
@@ -51,6 +53,11 @@ public class JwtUtils {
   public String getUsernameFromJwtToken(String token) {
     Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
     return (String) claims.get("Username");
+  }
+
+  public String getIdFromJwtToken(String token) {
+    Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+    return (String) claims.get("id");
   }
 
   public boolean validateJwtToken(String authToken) {

@@ -1,16 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Input } from "@nextui-org/react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import Logo from "../atoms/Logo";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuthContext();
+  const { login, user } = useAuthContext();
+  const navigate = useNavigate();
 
   const handleLogin = () => {
-    login(email, password);
+    login(username, password);
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user]);
+
   return (
     <div>
       <div className="flex flex-col justify-center items-center">
@@ -24,15 +34,15 @@ const LoginPage = () => {
 
         <form>
           <Input
-            type="email"
-            label="Email"
+            type="text"
+            label="Username"
             variant="bordered"
-            defaultValue="email@example.com"
-            errorMessage="Please enter a valid email"
+            defaultValue="Username@example.com"
+            errorMessage="Please enter a valid Username"
             className="max-w-xs m-2"
-            value={email}
-            onValueChange={setEmail}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onValueChange={setUsername}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <Input
             type="password"
@@ -52,6 +62,14 @@ const LoginPage = () => {
             Sign In
           </Button>
         </form>
+
+        <Link to={"/login"}>
+          <div className="p-6 ">
+            <p className="text-primary-400 hover:underline underline-offset-4 hover:decoration-solid">
+              Non sei registrato? Registrati qui
+            </p>
+          </div>
+        </Link>
       </div>
     </div>
   );

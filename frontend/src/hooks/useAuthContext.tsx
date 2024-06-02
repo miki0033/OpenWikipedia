@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 import IUser from "../interfaces/IUser";
 import ISignupRequest from "../interfaces/ISignupRequest";
 
@@ -8,6 +14,7 @@ interface AuthContextType {
   login: (username: string, password: string) => void;
   register: (object: ISignupRequest) => void;
   logout: () => void;
+  token: string;
   user?: IUser;
 }
 
@@ -18,26 +25,34 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [user, setUser] = useState<IUser>();
+  const [token, setToken] = useState<string>("");
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const login = async (username: string, password: string) => {
+    const request = {
+      username: username,
+      password: password,
+    };
+    console.log(JSON.stringify(request));
+
     try {
       const response = await fetch("http://localhost:8080/auth/v1/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
+        body: JSON.stringify(request),
       });
+      const result = await response.json();
 
       if (response.ok) {
         console.log(`Login successful for username: ${username}`);
         setIsLoggedIn(true);
-        console.log(response);
-
-        //setUser(response);
+        setUser(result.user);
+        setToken(result.token);
       } else {
         console.error("Login failed");
         setIsLoggedIn(false);
@@ -65,12 +80,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           lastName: request.lastName,
         }),
       });
+      const result = await response.json();
 
       if (response.ok) {
         console.log(`Signup successful for username: ${request.username}`);
-        console.log(response);
-
         setIsLoggedIn(true);
+        setUser(result);
       } else {
         console.error("Signup failed");
       }
@@ -80,14 +95,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    //TODO
-    // Implementa la logica di logout
     console.log("Logout");
     setIsLoggedIn(false);
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, register, logout, user }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, login, register, logout, user, token }}
+    >
       {children}
     </AuthContext.Provider>
   );

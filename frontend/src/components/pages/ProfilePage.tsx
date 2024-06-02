@@ -8,7 +8,7 @@ const ProfilePage = () => {
 
   return (
     <div className="w-full h-full flex flex-row">
-      <div id="sx" className="bg-default-100 w-1/4  flex flex-col gap-4 pt-20">
+      <div id="sx" className="bg-primary-50 w-1/4  flex flex-col gap-4 pt-20">
         <div>
           <p>{user?.username}</p>
         </div>
@@ -20,7 +20,7 @@ const ProfilePage = () => {
           })}
         </div>
       </div>
-      <div id="dx" className="bg-primary-50 w-3/4 pt-20">
+      <div id="dx" className="bg-primary-100 w-3/4 pt-20">
         {databaseArticles.length === 0 ? (
           <p>Non hai salvato nessun articolo</p>
         ) : (

@@ -3,19 +3,19 @@ import { Link } from "react-router-dom";
 import Logo from "../atoms/Logo";
 import { useEffect, useRef, useState } from "react";
 import IArticleSearch from "../../interfaces/IArticleSearch";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const Header = () => {
+  const { user, logout } = useAuthContext();
   const [value, setValue] = useState("");
 
   const [data, setData] = useState<IArticleSearch[]>([]);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
 
-  const searchCardRef = useRef<HTMLDivElement>(null);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
+  const searchCardRef = useRef<HTMLDivElement>(null);
 
   const handelSearch = async () => {
     setLoading(true);
@@ -39,8 +39,6 @@ const Header = () => {
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    console.log(searchCardRef.current);
-
     if (
       searchCardRef.current &&
       !searchCardRef.current.contains(event.target as Node)
@@ -71,7 +69,7 @@ const Header = () => {
       className="w-full grid grid-cols-3 gap-4 space-around px-8 py-4"
     >
       <div id="logo" className="flex justify-center">
-        <Link to={`/`} onClick={handleLinkClick}>
+        <Link to={`/`} onClick={handleLinkClick} className="hover:no-underline">
           <Logo></Logo>
         </Link>
       </div>
@@ -144,12 +142,29 @@ const Header = () => {
         id="sign"
         className="flex flex-row gap-4 justify-center items-center m-2"
       >
-        <Link to="/login">
-          <Button color="primary">Login</Button>
-        </Link>
-        <Link to="/register">
-          <Button color="primary">Register</Button>
-        </Link>
+        {!user ? (
+          <>
+            <Link to="/login">
+              <Button color="primary">Login</Button>
+            </Link>
+            <Link to="/register">
+              <Button color="primary">Register</Button>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="/profile">
+              <div className="flex justify-center items-center bg-default-100 text-2xl p-2 rounded-2xl im-sc-regular">
+                {user.username}
+              </div>
+            </Link>
+            <Link to="/">
+              <Button color="primary" onPress={logout}>
+                Log out
+              </Button>
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

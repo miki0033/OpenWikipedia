@@ -91,7 +91,7 @@ public class UserService {
             if (optional.isPresent()) {
                 return optional.get();
             } else {
-                throw new ErrorHandler(404, "Comment not found");
+                throw new ErrorHandler(404, "User not found");
             }
         } else {
             throw new ErrorHandler(400, "Id null");

@@ -1,7 +1,7 @@
 import ILatest from "./ILatest";
 
 interface IArticle {
-  id: number | string;
+  id?: number | string;
   key: string;
   title: string;
   latest?: ILatest;
