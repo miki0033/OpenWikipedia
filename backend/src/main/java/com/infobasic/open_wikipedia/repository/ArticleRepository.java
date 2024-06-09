@@ -1,6 +1,8 @@
 package com.infobasic.open_wikipedia.repository;
 
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -13,4 +15,6 @@ import org.bson.types.ObjectId;
 public interface ArticleRepository extends MongoRepository<Article, String> {
 
     Optional<Article> findByKeyAndUserId(String key, ObjectId userId);
+
+    Page<Article> findAllByUserId(ObjectId userId, Pageable pageable);
 }

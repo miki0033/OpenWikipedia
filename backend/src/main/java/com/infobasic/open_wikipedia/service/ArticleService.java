@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.infobasic.open_wikipedia.common.util.exception.ErrorHandler;
 import com.infobasic.open_wikipedia.common.util.security.jwt.JwtUtils;
 import org.bson.types.ObjectId;
@@ -56,6 +59,10 @@ public class ArticleService {
         } else {
             throw new ErrorHandler(400, "key null");
         }
+    }
+
+    public Page<Article> findAll(ObjectId id, Pageable pageable) {
+        return ArticleRepository.findAllByUserId(id, pageable);
     }
 
     // U

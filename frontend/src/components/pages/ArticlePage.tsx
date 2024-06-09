@@ -74,20 +74,14 @@ const ArticlePage = () => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      let htmlContent = await response.text(); // Ottieni il contenuto HTML come stringa
-      console.log(htmlContent); // Stampa il contenuto HTML sulla console
+      let htmlContent = await response.text();
+      console.log(htmlContent);
       htmlContent = replaceString(
         htmlContent,
         "it.wikipedia.org/wiki",
         BASE_URL + "/article"
       );
-      setHtml(htmlContent); // Imposta il contenuto HTML nella variabile di stato
-      /*
-      const result = await response.json();
-
-      setData(result);
-      setVisible(true);
-      wikitextToHtml(result);*/
+      setHtml(htmlContent);
     } catch (error) {
       console.error("Fetch error:", error);
     }
