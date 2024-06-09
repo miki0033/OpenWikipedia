@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infobasic.open_wikipedia.common.util.exception.ErrorHandler;
 import com.infobasic.open_wikipedia.common.util.security.jwt.JwtUtils;
 import com.infobasic.open_wikipedia.model.Article;
@@ -29,6 +30,8 @@ public class ArticleController {
     ArticleService ArticleService;
     @Autowired
     JwtUtils jwtUtils;
+    @Autowired
+    ObjectMapper objectMapper;
 
     // C
     @PostMapping("/v1/saveArticle")
@@ -50,11 +53,18 @@ public class ArticleController {
 
     // R
     @GetMapping("/v1/getArticle/{key}")
-    public ResponseEntity<String> getArticle(@PathVariable String key) {
+    public ResponseEntity<JsonNode> getArticle(@RequestHeader("Authorization") String authorizationHeader,
+            @PathVariable String key) {
         try {
-            Article Article = ArticleService.findByKey(key);
-            return ResponseEntity.status(200).body(Article.toString());
+            String token = jwtUtils.getToken(authorizationHeader);
+            ObjectId id = new ObjectId(jwtUtils.getIdFromJwtToken(token));
+            Article Article = ArticleService.findByKey(key, id);
+            return ResponseEntity.status(200).body(Article.toJSON());
         } catch (ErrorHandler err) {
+            if (err.getStatus() == 404) {
+                JsonNode body = objectMapper.createObjectNode().put("message", "Article not found");
+                return ResponseEntity.status(404).body(body);
+            }
             logger.warn(err.getMessage());
             throw new ResponseStatusException(err.getStatus(), err.getMessage(), err);
         } catch (Exception e) {

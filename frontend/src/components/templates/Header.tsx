@@ -1,7 +1,12 @@
-import { Button, Card, CardBody, Input } from "@nextui-org/react";
+import { Button, Card, CardBody, Input, Spinner } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import Logo from "../atoms/Logo";
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  KeyboardEvent as ReactKeyboardEvent,
+} from "react";
 import IArticleSearch from "../../interfaces/IArticleSearch";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
@@ -13,11 +18,11 @@ const Header = () => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
 
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  //const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const searchCardRef = useRef<HTMLDivElement>(null);
 
-  const handelSearch = async () => {
+  const handleSearch = async () => {
     setLoading(true);
     try {
       const response = await fetch(
@@ -36,6 +41,15 @@ const Header = () => {
     }
     setLoading(false);
     console.log(data);
+  };
+
+  const handleKeyPress = (
+    event: ReactKeyboardEvent<HTMLButtonElement>
+  ): void => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSearch();
+    }
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -81,6 +95,7 @@ const Header = () => {
           labelPlacement="outside-left"
           value={value}
           onValueChange={setValue}
+          onKeyDown={handleKeyPress}
           className="w-full justify-center"
           endContent={
             <Button
@@ -88,7 +103,7 @@ const Header = () => {
               color="default"
               variant="light"
               aria-label="Search"
-              onPress={handelSearch}
+              onPress={handleSearch}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +132,10 @@ const Header = () => {
           >
             <div id="results">
               {loading ? (
-                <p>Caricamento...</p>
+                <>
+                  <Spinner size="lg" />
+                  <p>Caricamento...</p>
+                </>
               ) : (
                 data.map((item) => (
                   <Link
